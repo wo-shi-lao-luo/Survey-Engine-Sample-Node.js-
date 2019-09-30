@@ -1,0 +1,22 @@
+{
+  "name": "survey-engine",
+  "version": "1.0.0",
+  "description": "survey engine for GWSB marketing department usage",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wo-shi-lao-luo/Survey-Engine.git"
+  },
+  "keywords": [
+    "survey"
+  ],
+  "author": "Kyle Luo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wo-shi-lao-luo/Survey-Engine/issues"
+  },
+  "homepage": "https://github.com/wo-shi-lao-luo/Survey-Engine#readme"
+}
