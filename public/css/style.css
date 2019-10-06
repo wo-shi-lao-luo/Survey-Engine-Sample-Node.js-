@@ -119,9 +119,14 @@ body {
   padding: 0px; }
 
 .main {
-  padding: 140px 0;
-  position: relative;
-  z-index: 99; }
+  /*padding: 140px 0;*/
+  /*position: relative;*/
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /*z-index: 99;*/
+  }
 
 .container {
   width: 665px;
