@@ -14,7 +14,7 @@ app.use( bodyParser.urlencoded ({     // to support URL-encoded bodies
 app.use(express.static(__dirname + '/public'));
 app.use('/', routes);
 
-server.listen(3000, 'localhost');
+server.listen(3000, '0.0.0.0');
 server.on('listening', function() {
     console.log('Express server started on port %s at %s', server.address().port, server.address().address);
 });
