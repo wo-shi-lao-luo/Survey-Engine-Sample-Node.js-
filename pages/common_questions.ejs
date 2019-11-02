@@ -9,9 +9,9 @@
 
 <h2></h2>
 <div>
-    <h3>B. Your age:</h3>
+    <h3>B. Your age: (Please enter digits)</h3>
     <fieldset>
-        <input type="number" name="age" id="age" required />
+        <input type="number" name="age" id="age" onkeydown="return event.keyCode !== 69" required />
         <label for="age" class="form-label"></label>
     </fieldset>
 </div>
@@ -19,8 +19,34 @@
 <h2></h2>
 <div>
     <h3>C. Gender:</h3>
+    <fieldset class="radioButton">
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br>
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">Other / Prefer not to answer</label><br>
+    </fieldset>
+</div>
+
+<h2></h2>
+<div>
+    <h3>D. Ethnicity:</h3>
     <fieldset>
-        <input type="text" name="gender" id="gender" required />
-        <label for="gender" class="form-label"></label>
+        <select name="ethnicity" onchange='CheckEthnicity(this.value);' id='ethchoice' class='select-css'> 
+            <option>Please click here to select one</option>  
+            <option value="AI">American Indian</option>
+            <option value="AA">African American</option>
+            <option value="AS">Asian</option>
+            <option value="HL">Hispanic or Latino</option>
+            <option value="CA">Caucasian</option>
+            <option value="MR">Multi-Racial</option>
+            <option value="OT">Other (please specify)</option>
+        </select>
+        
+        <div id="ethnicity" style='display:none;'>
+            <input type="text" id="ethnicity_other" name="ethnicity">
+            <label for="ethnicity" class="form-label"></label>
+        </div>
     </fieldset>
 </div>

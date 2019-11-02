@@ -1,6 +1,6 @@
 (function($) {
 
-    if (typeof audio_need !== 'undefined') {
+    if (typeof audio_need == 'undefined') {
         console.log('Reading - Typing page generated');
     }
     else {
@@ -13,13 +13,13 @@
              element.before(error); 
         },
         rules: {
-            first_name : {
+            pnum : {
                 required: true,
             },
-            last_name : {
+            age : {
                 required: true,
             },
-            email : {
+            gender : {
                 required: true,
             }
         },
@@ -66,7 +66,7 @@
             // //     form.parent().parent().parent().append('<div class="footer" style="height:752px;"></div>');
             // // }
             
-            if (typeof audio_need !== 'undefined' && currentIndex > 2) {
+            if (typeof audio_need !== 'undefined' && currentIndex > 3) {
                 if (audio_check) {
                     form.validate().settings.ignore = ":disabled,:hidden";
                     audio_check = false;
@@ -86,6 +86,7 @@
         onFinished: function (event, currentIndex)
         {
             form.parent().parent().append('<h1>This survey is to study consumer information disclosure in the context of building a participant pool. For now you do not need to type any information. Please do not tell other people the purpose of the survey.</h1>').parent().addClass('finished');
+            form.submit();
             return true;
         },
         onStepChanged : function (event, currentIndex, priorIndex) {
@@ -119,3 +120,16 @@
 })(jQuery);
 
 $('ul[role="tablist"]').hide();
+
+function CheckEthnicity(val) {
+    var element = document.getElementById('ethnicity');
+    var check = document.getElementById('ethnicity_other');
+    if(val=='OT') {
+        element.style.display = 'block';
+        check.setAttribute("required", "");
+    }
+    else {
+        element.style.display = 'none';
+        check.removeAttribute("required")
+    }
+}
