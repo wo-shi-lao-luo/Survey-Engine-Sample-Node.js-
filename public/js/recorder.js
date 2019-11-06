@@ -131,20 +131,30 @@ function createDownloadLink(blob) {
     //add controls to the <audio> element 
     au.controls = true;
     au.src = url;
+    au.setAttribute("name", "audio" + buttonID);
+    au.setAttribute("id", "audio" + buttonID);
+
+    var label = document.createElement("label");
+    label.setAttribute("for", "audio" + buttonID);
+	label.textContent = "audio" + buttonID;
+
     //link the a element to the blob 
     link.href = url;
     link.download = new Date().toISOString() + '.wav';
     link.innerHTML = link.download;
+
     //add the new audio and a elements to the li element 
     li.appendChild(au);
     li.appendChild(link);
+    li.appendChild(label);
+
     //add the li element to the ordered list 
     // recordingsList.appendChild(li);
 
     // var test = document.getElementById("name");
     // test.appendChild(li);
-    var test = recordButton.parentNode;
-    test.appendChild(li);
+    var audioFile = recordButton.parentNode;
+    audioFile.appendChild(li);
 
     //change buttonID
     buttonID ++;

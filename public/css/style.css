@@ -120,9 +120,15 @@ body {
   padding: 0px; }
 
 .main {
-  padding: 410px 0;
-  position: relative;
-  z-index: 99; }
+  /*padding: 410px 0;*/
+/*  position: relative;
+  z-index: 99; */
+  /*margin: auto;*/
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}
 
 .container {
   width: 665px;

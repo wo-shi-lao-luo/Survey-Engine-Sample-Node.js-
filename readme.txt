@@ -43,6 +43,22 @@ CREATE TABLE survey1 (
 	age INTEGER,
 	gender VARCHAR(255),
 	ethnicity VARCHAR(255),
+	name BLOB,
+	birth BLOB,
+	address BLOB,
+	email BLOB,
+	fb BLOB,
+	fbid BLOB,
+	phone BLOB,
+	income BLOB,
+	cookie BLOB,
+	PRIMARY KEY (pnum))
+
+CREATE TABLE survey2 (
+	pnum VARCHAR(255) NOT NULL,
+	age INTEGER,
+	gender VARCHAR(255),
+	ethnicity VARCHAR(255),
 	name VARCHAR(255),
 	birth VARCHAR(255),
 	address VARCHAR(255),

@@ -66,7 +66,7 @@
             // //     form.parent().parent().parent().append('<div class="footer" style="height:752px;"></div>');
             // // }
             
-            if (typeof audio_need !== 'undefined' && currentIndex > 3) {
+            if (typeof audio_need !== 'undefined' && currentIndex > 5) {
                 if (audio_check) {
                     form.validate().settings.ignore = ":disabled,:hidden";
                     audio_check = false;
