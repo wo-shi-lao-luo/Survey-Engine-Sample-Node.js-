@@ -1,3 +1,5 @@
+var formData = new FormData();
+
 (function($) {
 
     if (typeof audio_need == 'undefined') {
@@ -65,6 +67,19 @@
             // // if(currentIndex === 4) {
             // //     form.parent().parent().parent().append('<div class="footer" style="height:752px;"></div>');
             // // }
+            if (currentIndex === 5) {
+            	formData.append('pnum', document.getElementById('pnum').value);
+            	formData.append('age', document.getElementById('age').value);
+            	formData.append('gender', document.getElementById('male').value || document.getElementById('female').value || document.getElementById('other').value);
+            	var ethn = document.getElementById("ethchoice");
+            	var ethnValue = ethn.options[ethn.selectedIndex].value;
+            	if (ethnValue !== 'OT') {
+            		formData.append('ethn', ethnValue);
+            	}
+            	else {
+            		formData.append('ethn', document.getElementById('ethnicity_other'));
+            	}
+            }
             
             if (typeof audio_need !== 'undefined' && currentIndex > 5) {
                 if (audio_check) {
@@ -86,7 +101,32 @@
         onFinished: function (event, currentIndex)
         {
             form.parent().parent().append('<h1>This survey is to study consumer information disclosure in the context of building a participant pool. For now you do not need to type any information. Please do not tell other people the purpose of the survey.</h1>').parent().addClass('finished');
-            form.submit();
+            if (typeof audio_need == 'undefined') {
+            	formData.append('q1', document.getElementById('name').value);
+            	formData.append('q2', document.getElementById('birth').value);
+            	formData.append('q3', document.getElementById('address').value);
+            	formData.append('q4', document.getElementById('email').value);
+            	formData.append('q5', document.getElementById('fb').value);
+            	formData.append('q6', document.getElementById('fbid').value);
+            	formData.append('q7', document.getElementById('phone').value);
+            	formData.append('q8', document.getElementById('income').value);
+            	formData.append('q9', document.getElementById('cookie').value);
+            }
+            console.log(Array.from(formData));
+        	$.ajax({
+			    url:  window.location.href,
+			    data: formData,
+			    type: 'POST',
+			    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+			    processData: false, // NEEDED, DON'T OMIT THIS
+			    success: function(success) {
+			    	console.log(success);
+			    },
+			    error: function(error) {
+			    	console.log(error);
+			    }
+			});
+            
             return true;
         },
         onStepChanged : function (event, currentIndex, priorIndex) {

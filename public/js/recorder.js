@@ -5,166 +5,111 @@ var buttonID = 1;
 var audio_need = true;
 var audio_check = false;
 
-var recordButton = document.querySelector('#recordButton' + buttonID);
-var stopButton = document.querySelector('#stopButton' + buttonID);
-// var pauseButton = document.querySelector('#pauseButton');
+var record = document.querySelector('#recordButton' + buttonID);
+var stop = document.querySelector('#stopButton' + buttonID);
 
-//webkitURL is deprecated but nevertheless 
-URL = window.URL || window.webkitURL;
+var soundClips = document.querySelector('.sound-clips');
 
-var gumStream;
-//stream from getUserMedia() 
-var rec;
-//Recorder.js object 
-var input;
-//MediaStreamAudioSourceNode we'll be recording 
-// shim for AudioContext when it's not avb. 
+function recordStart() {
+	if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+	   console.log('getUserMedia supported.');
+	   navigator.mediaDevices.getUserMedia (
+	      // constraints - only audio needed for this app
+			{
+				audio: true
+			})
 
-// var AudioContext = window.AudioContext || window.webkitAudioContext;
-// var audioContext = new AudioContext();
+	      // Success callback
+	      	.then(function(stream) {
+				var mediaRecorder = new MediaRecorder(stream);
 
-//new audio context to help us record 
+				record.onclick = function() {
+					mediaRecorder.start();
+					record.disabled = true;
+					record.classList.remove("btn-primary");
+					record.classList.add("btn-secondary");
+					stop.disabled = false;
+					stop.classList.remove("btn-secondary");
+					stop.classList.add("btn-primary");
+					console.log(mediaRecorder.state);
+					console.log("recorder started");
 
-// var recordButton = document.getElementById("recordButton");
-// var stopButton = document.getElementById("stopButton");
-// var pauseButton = document.getElementById("pauseButton");
+				}
 
-//add events to those 3 buttons 
+				var chunks = [];
 
-recordButton.addEventListener("click", startRecording);
-stopButton.addEventListener("click", stopRecording);
-// pauseButton.addEventListener("click", pauseRecording);
+				mediaRecorder.ondataavailable = function(e) {
+					chunks.push(e.data);
+				}
+
+				stop.onclick = function() {
+					mediaRecorder.stop();
+					console.log(mediaRecorder.state);
+					console.log("recorder stopped");
+
+				}
+
+				mediaRecorder.onstop = function(e) {
+					console.log("recorder stopped");
+
+					var clipContainer = document.createElement('article');
+					var clipLabel = document.createElement('p');
+					var audio = document.createElement('audio');
+					var deleteButton = document.createElement('button');
+					       
+					clipContainer.classList.add('clip');
+					audio.setAttribute('controls', '');
+					deleteButton.innerHTML = "Delete";
+					clipLabel.innerHTML = "clip" + buttonID;
+
+					clipContainer.appendChild(audio);
+					clipContainer.appendChild(clipLabel);
+					clipContainer.appendChild(deleteButton);
+					var audioFile = record.parentNode;
+	    			audioFile.appendChild(clipContainer);
+					// soundClips.appendChild(clipContainer);
+
+					var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+					
+					formData.append("audio" + buttonID, blob, "audioFile" + buttonID);
+					console.log(Array.from(formData));
+
+					chunks = [];
+					var audioURL = window.URL.createObjectURL(blob);
+					audio.src = audioURL;
+
+				    stop.disabled = true;
+					stop.classList.remove("btn-primary");
+					stop.classList.add("btn-secondary");
+					record.disabled = true;
+
+					//change buttonID
+				    buttonID ++;
+				    record = document.querySelector('#recordButton' + buttonID);
+					stop = document.querySelector('#stopButton' + buttonID);
+
+					//enable next page button
+					audio_check = true;
 
 
-function startRecording() { 
+					deleteButton.onclick = function(e) {
+						var evtTgt = e.target;
+						evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+					}
 
-	var AudioContext = window.AudioContext || window.webkitAudioContext;
-	var audioContext = new AudioContext();
+					recordStart();
+				}
+	        
+	      })
 
-	console.log("recordButton clicked"); 
-
-	/* Simple constraints object, for more advanced audio features see
-
-	https://addpipe.com/blog/audio-constraints-getusermedia/ */
-
-	var constraints = {
-	    audio: true,
-	    video: false
-	} 
-	/* Disable the record button until we get a success or fail from getUserMedia() */
-
-	recordButton.disabled = true;
-	recordButton.classList.remove("btn-primary");
-	recordButton.classList.add("btn-secondary");
-	stopButton.disabled = false;
-	stopButton.classList.remove("btn-secondary");
-	stopButton.classList.add("btn-primary");
-	// pauseButton.disabled = false;
-
-	/* We're using the standard promise based getUserMedia()
-
-	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia */
-
-	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-	    console.log("getUserMedia() success, stream created, initializing Recorder.js ..."); 
-	    /* assign to gumStream for later use */
-	    gumStream = stream;
-	    /* use the stream */
-	    input = audioContext.createMediaStreamSource(stream);
-	    /* Create the Recorder object and configure to record mono sound (1 channel) Recording 2 channels will double the file size */
-	    rec = new Recorder(input, {
-	        numChannels: 1
-	    }) 
-	    //start the recording process 
-	    rec.record()
-	    console.log("Recording started");
-	}).catch(function(err) {
-	    //enable the record button if getUserMedia() fails 
-	    // recordButton.disabled = false;
-	    // stopButton.disabled = true;
-	    stopButton.disabled = true;
-		stopButton.classList.remove("btn-primary");
-		stopButton.classList.add("btn-secondary");
-	    recordButton.disabled = false;
-	    recordButton.classList.remove("btn-secondary");
-		recordButton.classList.add("btn-primary");
-	    // pauseButton.disabled = true;
-	});
+	      // Error callback
+			.catch(function(err) {
+				console.log('The following getUserMedia error occured: ' + err);
+			}
+	   );
+	} else {
+	   console.log('getUserMedia not supported on your browser!');
+	}
 }
 
-// function pauseRecording() {
-//     console.log("pauseButton clicked rec.recording=", rec.recording);
-//     if (rec.recording) {
-//         //pause 
-//         rec.stop();
-//         pauseButton.innerHTML = "Resume";
-//     } else {
-//         //resume 
-//         rec.record()
-//         pauseButton.innerHTML = "Pause";
-//     }
-// }
-
-function stopRecording() {
-    console.log("stopButton clicked");
-    //disable the stop button, enable the record too allow for new recordings 
-    stopButton.disabled = true;
-	stopButton.classList.remove("btn-primary");
-	stopButton.classList.add("btn-secondary");
-    recordButton.disabled = true;
-
-    // pauseButton.disabled = true;
-    //reset button just in case the recording is stopped while paused 
-    // pauseButton.innerHTML = "Pause";
-    //tell the recorder to stop the recording 
-    rec.stop(); //stop microphone access 
-    gumStream.getAudioTracks()[0].stop();
-    //create the wav blob and pass it on to createDownloadLink 
-    rec.exportWAV(createDownloadLink);
-}
-
-function createDownloadLink(blob) {
-    var url = URL.createObjectURL(blob);
-    var au = document.createElement('audio');
-    var li = document.createElement('li');
-    var link = document.createElement('a');
-    //add controls to the <audio> element 
-    au.controls = true;
-    au.src = url;
-    au.setAttribute("name", "audio" + buttonID);
-    au.setAttribute("id", "audio" + buttonID);
-
-    var label = document.createElement("label");
-    label.setAttribute("for", "audio" + buttonID);
-	label.textContent = "audio" + buttonID;
-
-    //link the a element to the blob 
-    link.href = url;
-    link.download = new Date().toISOString() + '.wav';
-    link.innerHTML = link.download;
-
-    //add the new audio and a elements to the li element 
-    li.appendChild(au);
-    li.appendChild(link);
-    li.appendChild(label);
-
-    //add the li element to the ordered list 
-    // recordingsList.appendChild(li);
-
-    // var test = document.getElementById("name");
-    // test.appendChild(li);
-    var audioFile = recordButton.parentNode;
-    audioFile.appendChild(li);
-
-    //change buttonID
-    buttonID ++;
-    recordButton = document.querySelector('#recordButton' + buttonID);
-	stopButton = document.querySelector('#stopButton' + buttonID);
-	recordButton.addEventListener("click", startRecording);
-	stopButton.addEventListener("click", stopRecording);
-
-	//allows to click next page button
-	audio_check = true;
-}
-
-
+recordStart();

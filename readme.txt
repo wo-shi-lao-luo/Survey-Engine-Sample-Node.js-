@@ -24,6 +24,7 @@ Express:
 		$ npm install -g nodemon
 		$ npm install express
 		$ npm install --save body-parser
+		$ npm install multer
 	To start:
 		$ nodemon
 	File:
@@ -38,34 +39,19 @@ Database config:
 
 CREATE DATABASE surveyengine;
 
-CREATE TABLE survey1 (
+CREATE TABLE survey (
 	pnum VARCHAR(255) NOT NULL,
-	age INTEGER,
+	question INTEGER NOT NULL,
+	age VARCHAR(255),
 	gender VARCHAR(255),
-	ethnicity VARCHAR(255),
-	name BLOB,
-	birth BLOB,
-	address BLOB,
-	email BLOB,
-	fb BLOB,
-	fbid BLOB,
-	phone BLOB,
-	income BLOB,
-	cookie BLOB,
-	PRIMARY KEY (pnum))
-
-CREATE TABLE survey2 (
-	pnum VARCHAR(255) NOT NULL,
-	age INTEGER,
-	gender VARCHAR(255),
-	ethnicity VARCHAR(255),
-	name VARCHAR(255),
-	birth VARCHAR(255),
-	address VARCHAR(255),
-	email VARCHAR(255),
-	fb VARCHAR(255),
-	fbid VARCHAR(255),
-	phone VARCHAR(255),
-	income VARCHAR(255),
-	cookie VARCHAR(255),
+	ethn VARCHAR(255),
+	q1 VARCHAR(255),
+	q2 VARCHAR(255),
+	q3 VARCHAR(255),
+	q4 VARCHAR(255),
+	q5 VARCHAR(255),
+	q6 VARCHAR(255),
+	q7 VARCHAR(255),
+	q8 VARCHAR(255),
+	q9 VARCHAR(255),
 	PRIMARY KEY (pnum))
