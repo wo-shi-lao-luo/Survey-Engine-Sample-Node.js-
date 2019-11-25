@@ -1,35 +1,40 @@
-This template was made by Colorlib (https://colorlib.com)
-Please visit our website for more awesome templates, themes and tools. 
-
 ``````
 
 Server is based on Node.js, using ejs template.
 HTML5 is required for full functions of the website.
 
+Other Requirements:
+	SSL will be needed to support HTTPS request for web server.
+	HTTPS is required to capture audios from users
+
+
 ``````
 
 Recording function uses getUserMedia functions by frontend JavaScript.
 Please check /public/js/recorder.js
+// Chrome requires server start recording after user make gesture (click, type, etc.). So be careful when editing the recorder.js file. Make sure recording request be triggered after onclick() function is triggered. 
 
 
 ``````
+Backend settings and packages:
 
-Config: 
-	$ npm install ejs
+Required Packages: 
+	$ npm install ejs						(page render)
+	$ npm install express					(server build)
+	$ npm install --save body-parser		(page content parse)
+	$ npm install multer					(file upload)
+	$ npm install -g nodemon				(real time monitor)
+	$ npm install -save mysql				(database API)
+Settings:
+	package.json							(npm settings)
 Start:
-	$ node app.js
+	$ node app.js 							(start local server)
 
-Express:
+Monitor:
 	Config:
-		$ npm install -g nodemon
-		$ npm install express
-		$ npm install --save body-parser
-		$ npm install multer
+		$ npm install -g nodemon			
 	To start:
-		$ nodemon
-	File:
-		nodemon.js
-	App.js config:
+		$ nodemon							(start local server with monitor)
 		
 ``````
 
@@ -55,3 +60,19 @@ CREATE TABLE survey (
 	q8 VARCHAR(255),
 	q9 VARCHAR(255),
 	PRIMARY KEY (pnum))
+
+
+``````
+
+AWS Service:
+	EC2									(Linux Virtual Machine)
+	CloudFront							(HTTPS setting, also increase server response performance)
+	Route53								(SSL certificate, DNS setting)
+
+Linux Virtual Machine config:
+	Set output port to 80: 				(original port is 3000)
+		$sudo iptables -t nat -A PREROUTING -p tcp --dport 80 REDIRECT --to-ports 3000
+
+Google Service:
+	Google Domains						(Domain name)
+``````
