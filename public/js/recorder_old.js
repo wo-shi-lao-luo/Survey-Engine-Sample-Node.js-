@@ -1,5 +1,5 @@
 //Track different buttons
-var buttonID = 1;
+var buttonID = 0;
 
 //Check if webpage needs to record audios
 var audio_need = true;
