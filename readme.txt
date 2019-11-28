@@ -25,6 +25,7 @@ Required Packages:
 	$ npm install multer					(file upload)
 	$ npm install -g nodemon				(real time monitor)
 	$ npm install -save mysql				(database API)
+	$ npm install passport					(login status authentication)
 Settings:
 	package.json							(npm settings)
 Start:

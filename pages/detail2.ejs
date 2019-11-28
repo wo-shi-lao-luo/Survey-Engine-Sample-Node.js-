@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> <%= record.pnum %> Detail</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">	
+</head>
+<body>
+	<div class='container' style="width: 1000px;">
+		<br>
+		<table class="table">
+			<tr>
+				<th>
+					<h1>ID: <%= record[0].pnum %></h1>
+				</th>
+				<td style="text-align: right;">
+					<button onclick="window.location.href='/record'" class="btn btn-primary">Back</button>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					Survey Type
+				</th>
+				<td>
+					<% if (record[0].question == 2) { -%>
+						Reading - Typing
+					<% } else { -%>
+						Listening - Typing
+					<% } -%>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					Age
+				</th>
+				<td>
+					<%- record[0].age %>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					Gender
+				</th>
+				<td>
+					<%= record[0].gender %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					Ethnicity
+				</th>
+				<td>
+					<%= record[0].ethn %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					1. Are you willing to share with us your full name? 
+				</th>
+				<td>
+					<%= record[0].q1 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					2. Are you willing to share with us your date of birth?
+				</th>
+				<td>
+					<%= record[0].q2 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					3. Are you willing to share with us your home address?
+				</th>
+				<td>
+					<%= record[0].q3 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					4. Are you willing to share with us your email address?
+				</th>
+				<td>
+					<%= record[0].q4 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					5. Do you use Facebook?
+				</th>
+				<td>
+					<%= record[0].q5 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					6. Are you willing to share with us your Facebook ID or URL?
+				</th>
+				<td>
+					<%= record[0].q6 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					7. Are you willing to share with us your phone number?
+				</th>
+				<td>
+					<%= record[0].q7 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					8. Are you willing to share with us your annual income?
+				</th>
+				<td>
+					<%= record[0].q8 %>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					9. Are you willing to install cookies and share browsing history?
+				</th>
+				<td>
+					<%= record[0].q9 %>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+</body>
+</html>

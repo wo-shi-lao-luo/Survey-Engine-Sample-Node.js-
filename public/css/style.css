@@ -131,7 +131,7 @@ body {
 }
 
 .container {
-  width: 665px;
+  width: 800px;
   margin: 0 auto;
   background: #fff;
   box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.1);
@@ -247,7 +247,7 @@ fieldset {
   padding: 0 15px 0 55px; }
 
 .content {
-  width: 334px;
+  width: 555px;
   padding-bottom: 25px; }
 
 .actions {

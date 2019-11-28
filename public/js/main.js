@@ -3,10 +3,10 @@ var formData = new FormData();
 (function($) {
 
     if (typeof audio_need == 'undefined') {
-        console.log('Reading - Typing page generated');
+        console.log('Reading/Listening - Typing page generated');
     }
     else {
-        console.log('Reading - Talking page generated');
+        console.log('Reading/Listening - Talking page generated');
     }
 
     var form = $("#survey-form");
@@ -81,7 +81,7 @@ var formData = new FormData();
             	}
             }
             
-            if (typeof audio_need !== 'undefined' && currentIndex > 5) {
+            if (typeof audio_need !== 'undefined' && currentIndex > 6) {
                 if (audio_check) {
                     form.validate().settings.ignore = ":disabled,:hidden";
                     audio_check = false;

@@ -34,7 +34,7 @@ async function addRecord(pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, 
 }
 
 function getRecord(pnum) {
-	return new Promise( (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		var sql = "SELECT * FROM survey WHERE pnum = ?";
 		var values = [[pnum]];
 		pool.query(sql, [values], function (err, result) {
@@ -45,8 +45,20 @@ function getRecord(pnum) {
 	})
 }
 
+function getAll() {
+	return new Promise((resolve, reject) => {
+		var sql = "SELECT * FROM survey";
+		pool.query(sql, function (err, result) {
+			if (err) return reject(err);
+		    console.log("Got all record");
+		    return resolve(result);
+		})
+	})
+}
+
 module.exports = {
 	mysql,
 	addRecord,
-	getRecord
+	getRecord,
+	getAll
 }

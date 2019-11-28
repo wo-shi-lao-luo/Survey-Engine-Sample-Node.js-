@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Survey Records</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div class='container' style="width: 1000px;">
+			<br>
+		<table class="table">
+			<th>
+				<h1>All Survey Records</h1>
+			</th>
+			<th>
+				<button onclick="window.location.href='/logout'" class="btn btn-primary" style="text-align: right">Log Out</button>
+			</th>
+		</table>
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Condition</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Ethnicity</th>
+				<th>View</th>
+			</tr>
+			<% records.forEach(function(record) { %>
+				<tr>
+					<td> <%= record.pnum %> </td>
+					<td> <%= record.question %> </td>
+					<td> <%= record.age %> </td>
+					<td> <%= record.gender %> </td>
+					<td> <%= record.ethn %> </td>
+					<td>
+						<form method="post">
+							<input type="text" name="pnum" value="<%= record.pnum %>" style="display:none;">
+							<input type="submit" name="submit" value="view">
+						</form>
+					</td>
+				</tr>
+			<% }) %>		
+		</table>		
+	</div>
+
+</body>
+</html>
