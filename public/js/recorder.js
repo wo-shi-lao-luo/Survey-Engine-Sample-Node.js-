@@ -52,21 +52,21 @@ function recordStart() {
 				mediaRecorder.onstop = function(e) {
 					console.log("recorder stopped");
 
-					var clipContainer = document.createElement('article');
-					var clipLabel = document.createElement('p');
-					var audio = document.createElement('audio');
-					var deleteButton = document.createElement('button');
+					// var clipContainer = document.createElement('article');
+					// var clipLabel = document.createElement('p');
+					// var audio = document.createElement('audio');
+					// var deleteButton = document.createElement('button');
 					       
-					clipContainer.classList.add('clip');
-					audio.setAttribute('controls', '');
-					deleteButton.innerHTML = "Delete";
-					clipLabel.innerHTML = "clip" + buttonID;
+					// clipContainer.classList.add('clip');
+					// audio.setAttribute('controls', '');
+					// deleteButton.innerHTML = "Delete";
+					// clipLabel.innerHTML = "clip" + buttonID;
 
-					clipContainer.appendChild(audio);
-					clipContainer.appendChild(clipLabel);
-					clipContainer.appendChild(deleteButton);
-					var audioFile = record.parentNode;
-	    			audioFile.appendChild(clipContainer);
+					// clipContainer.appendChild(audio);
+					// clipContainer.appendChild(clipLabel);
+					// clipContainer.appendChild(deleteButton);
+					// var audioFile = record.parentNode;
+	    			// audioFile.appendChild(clipContainer);
 					// soundClips.appendChild(clipContainer);
 
 					var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
@@ -76,7 +76,7 @@ function recordStart() {
 
 					chunks = [];
 					var audioURL = window.URL.createObjectURL(blob);
-					audio.src = audioURL;
+					// audio.src = audioURL;
 
 				    stop.disabled = true;
 					stop.classList.remove("btn-primary");
@@ -91,11 +91,10 @@ function recordStart() {
 					//enable next page button
 					audio_check = true;
 
-
-					deleteButton.onclick = function(e) {
-						var evtTgt = e.target;
-						evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-					}
+					// deleteButton.onclick = function(e) {
+					// 	var evtTgt = e.target;
+					// 	evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+					// }
 
 					recordStart();
 				}

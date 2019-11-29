@@ -12,7 +12,7 @@ app.use( bodyParser.urlencoded ({     	// to support URL-encoded bodies
 	extended: true
 })); 
 
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1) 				// trust first proxy
 app.use(session({
 	secret: 'keyboard cat',
 	resave: false,

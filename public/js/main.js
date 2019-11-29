@@ -52,32 +52,17 @@ var formData = new FormData();
         },
         onStepChanging: function (event, currentIndex, newIndex)
         {
-            // if(currentIndex === 0) {
-            //     form.parent().parent().parent().append('<div class="footer footer-' + currentIndex + '"></div>');
-            // }
-            // if(currentIndex === 1) {
-            //     form.parent().parent().parent().find('.footer').removeClass('footer-0').addClass('footer-'+ currentIndex + '');
-            // }
-            // if(currentIndex === 2) {
-            //     form.parent().parent().parent().find('.footer').removeClass('footer-1').addClass('footer-'+ currentIndex + '');
-            // }
-            // if(currentIndex === 3) {
-            //     form.parent().parent().parent().find('.footer').removeClass('footer-2').addClass('footer-'+ currentIndex + '');
-            // }
-            // // if(currentIndex === 4) {
-            // //     form.parent().parent().parent().append('<div class="footer" style="height:752px;"></div>');
-            // // }
             if (currentIndex === 5) {
             	formData.append('pnum', document.getElementById('pnum').value);
             	formData.append('age', document.getElementById('age').value);
-            	formData.append('gender', document.getElementById('male').value || document.getElementById('female').value || document.getElementById('other').value);
+            	formData.append('gender', document.querySelector('input[name="gender"]:checked').value);
             	var ethn = document.getElementById("ethchoice");
             	var ethnValue = ethn.options[ethn.selectedIndex].value;
             	if (ethnValue !== 'OT') {
             		formData.append('ethn', ethnValue);
             	}
             	else {
-            		formData.append('ethn', document.getElementById('ethnicity_other'));
+            		formData.append('ethn', document.getElementById('ethnicity_other').value);
             	}
             }
             

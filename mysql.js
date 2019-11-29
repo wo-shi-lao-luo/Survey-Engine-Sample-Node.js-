@@ -1,11 +1,16 @@
 const mysql = require('mysql');
 
 const pool = mysql.createPool({
-	connectionLimit: 10,
-	host: "localhost",
+	connectionLimit: 100,
+	host: "surveydb.covbsd7hypl1.us-east-1.rds.amazonaws.com",
 	user: "root",
-	password: "",
+	password: "gwumarketing",
 	database: "surveyengine"
+	// connectionLimit: 100,
+	// host: "localhost",
+	// user: "root",
+	// password: "",
+	// database: "surveyengine"
 });
 
 async function addRecord(pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9) {
@@ -16,7 +21,6 @@ async function addRecord(pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, 
 			let values = [[pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9]];
 			pool.query(sql, [values], function (err, result) {
 			    if (err) return reject(err);
-			    console.log(result);
 			    console.log("New record inserted");
 			})
 		}
@@ -25,7 +29,6 @@ async function addRecord(pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, 
 			let values = {question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9};
 			pool.query(sql, [values], function (err, result) {
 			    if (err) return reject(err);
-			    console.log(result);
 			    console.log("Record updated");
 			})
 		}

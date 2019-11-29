@@ -27,7 +27,6 @@ var questions3 = fs.readFileSync(__dirname + '/pages/questions3.ejs', 'utf-8');
 var questions4 = fs.readFileSync(__dirname + '/pages/questions4.ejs', 'utf-8');
 var cquestions = fs.readFileSync(__dirname + '/pages/common_questions.ejs', 'utf-8');
 var recorderjs = fs.readFileSync(__dirname + '/pages/recorderjs.ejs', 'utf-8');
-// var top = fs.readFileSync(__dirname + '/pages/top.ejs', 'utf-8');
 var test = fs.readFileSync(__dirname + '/pages/test.ejs', 'utf-8');
 var admin = fs.readFileSync(__dirname + '/pages/admin.ejs', 'utf-8');
 var record = fs.readFileSync(__dirname + '/pages/record.ejs', 'utf-8');
@@ -36,13 +35,11 @@ var detail2 = fs.readFileSync(__dirname + '/pages/detail2.ejs', 'utf-8');
 
 
 routes.get('/', function(req, res) {
-	res.header('Cache-Control','max-age=0');
 	var data = ejs.render(index);
 	res.send(data);
 });
 
 routes.get('/survey1', function(req, res) {
-	res.header('Cache-Control','max-age=0');
 	var data = ejs.render(survey, {cquestions, questions: questions1});
 	res.send(data);
 });
@@ -69,7 +66,6 @@ routes.post('/survey1', upload.any(), async function(req,res) {
 });
 
 routes.get('/survey2', function(req, res) {
-	res.header('Cache-Control','max-age=0');
 	var data = ejs.render(survey, {cquestions, questions:questions2});
 	res.send(data);
 });
@@ -96,7 +92,6 @@ routes.post('/survey2', upload.any(), async function(req,res) {
 })
 
 routes.get('/survey3', function(req, res) {
-	res.header('Cache-Control','max-age=0');
 	var data = ejs.render(survey, {cquestions, questions: questions3});
 	res.send(data);
 });
@@ -123,7 +118,6 @@ routes.post('/survey3', upload.any(), async function(req,res) {
 });
 
 routes.get('/survey4', function(req, res) {
-	res.header('Cache-Control','max-age=0');
 	var data = ejs.render(survey, {cquestions, questions:questions4});
 	res.send(data);
 });
@@ -172,6 +166,7 @@ routes.get('/record', async function(req, res) {
 		return;
 	}
 	var records = await mysql.getAll();
+	console.log(records);
 	var data = ejs.render(record, {records: records});
 	res.send(data);
 })
@@ -181,6 +176,10 @@ routes.post('/record', function(req, res) {
 })
 
 routes.get('/detail', async function(req, res) {
+	if (!req.session.login) {
+		res.redirect('/admin');
+		return;
+	}
 	var pnum = req.query.pnum;
 	var result= await mysql.getRecord(pnum);
 	if (result[0].question == 1 || result[0].question == 3) {
@@ -197,32 +196,5 @@ routes.get('/logout', function(req, res) {
 	res.redirect('/admin');
 	return;
 })
-
-
-
-
-
-
-
-routes.get('/test', async function(req, res) {
-	var pnum = req.query.pnum;	
-	var result= await mysql.getRecord(pnum);
-	if (result[0].question == 1 || result[0].question == 3) {
-		var data = ejs.render(detail1, {record: result});
-		res.send(data);
-	}
-	else {
-		var data = ejs.render(detail2, {record: result});
-		res.send(data);
-	}
-	// res.send(fs.readFileSync(__dirname + '/pages/test.ejs', 'utf-8'))
-	// audio = fs.createReadStream(__dirname + "/uploads/0ec21825fffef8805f8586f3eed5c7eb");
-	// console.log(audio);
-	// var data = ejs.render(test, audio);
-	// var data = ejs.render(test);
-});
-// routes.post('/test', async function(req, res) {
-	
-// });
 
 module.exports = routes;
