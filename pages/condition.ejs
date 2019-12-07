@@ -12,30 +12,34 @@
 				<h1>All Survey Records</h1>
 			</th>
 			<th>
-				<button onclick="window.location.href='/logout'" class="btn btn-primary" style="text-align: right; margin-top: 1em">Log Out</button>
+				<button onclick="window.location.href='/record'" class="btn btn-primary" style="text-align: right; margin-top: 1em">Back</button>
 			</th>
 		</table>
 		<table class="table">
 			<tr>
+				<th>ID</th>
 				<th>Condition</th>
-				<th>Count</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Ethnicity</th>
 				<th>View</th>
 			</tr>
 			<% records.forEach(function(record) { %>
 				<tr>
+					<td> <%= record.pnum %> </td>
 					<td> <%= record.question %> </td>
-					<td> <%= record.count %> </td>
+					<td> <%= record.age %> </td>
+					<td> <%= record.gender %> </td>
+					<td> <%= record.ethn %> </td>
 					<td>
 						<form method="post">
-							<input type="text" name="pnum" value="<%= record.question %>" style="display:none;">
+							<input type="text" name="pnum" value="<%= record.pnum %>" style="display:none;">
 							<input type="submit" name="submit" value="view">
 						</form>
 					</td>
 				</tr>
 			<% }) %>		
-		</table>
-		<br><br><br>
-		<button onclick="window.location.href='/delete_all'" class="btn btn-danger" style="text-align: right; margin-top: 1em">Delete All Records</button>		
+		</table>		
 	</div>
 
 </body>

@@ -1,15 +1,15 @@
 <h2></h2>
 <div>
     <h3>
-        You will be asked to fill out a short survey. At the beginning, please enter your University ID as user ID, and provide demographic information. <br><br>
-        The survey will take 5-10 minutes. You will receive 0.25 course credit for the survey.
+        You will be asked to fill out a short survey. At the beginning, please enter your first and last name, and provide demographic information. <br><br>
+        The survey will take 5-10 minutes. You will receive 0.50 research credit for the survey.
     </h3>
 </div>
 
 
 <h2></h2>
 <div>
-    <h3>A. First please enter your University ID:</h3>
+    <h3>A. First please enter your first and last name:</h3>
     <fieldset>
         <input type="text" name="pnum" id="pnum" required />
         <label for="pnum" class="form-label"></label>
@@ -29,11 +29,11 @@
 <div>
     <h3>C. Gender:</h3>
     <fieldset class="radioButton">
-        <input type="radio" id="male" name="gender" value="male">
+        <input type="radio" id="male" name="gender" value="Male">
         <label for="male">Male</label><br>
-        <input type="radio" id="female" name="gender" value="female">
+        <input type="radio" id="female" name="gender" value="Female">
         <label for="female">Female</label><br>
-        <input type="radio" id="other" name="gender" value="other">
+        <input type="radio" id="other" name="gender" value="Other / Prefer not to answer">
         <label for="other">Other / Prefer not to answer</label><br>
     </fieldset>
 </div>
@@ -41,8 +41,7 @@
 <h2></h2>
 <div>
     <h3>D. Ethnicity:</h3>
-    <fieldset>
-        <select name="ethnicity" onchange='CheckEthnicity(this.value);' id='ethchoice' class='select-css'> 
+        <select name="ethnicity" onchange='CheckEthnicity(this.value);' id='ethchoice' class='select-css' required> 
             <option>Please click here to select one</option>  
             <option value="American Indian">American Indian</option>
             <option value="African American">African American</option>
@@ -53,9 +52,8 @@
             <option value="OT">Other (please specify)</option>
         </select>
         
-        <div id="ethnicity" style='display:none;'>
+        <div id="ethnicity" style='display:none;' required>
             <input type="text" id="ethnicity_other" name="ethnicity">
             <label for="ethnicity" class="form-label"></label>
         </div>
-    </fieldset>
 </div>

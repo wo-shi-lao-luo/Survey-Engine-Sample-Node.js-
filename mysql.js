@@ -50,7 +50,7 @@ function getRecord(pnum) {
 
 function getAll() {
 	return new Promise((resolve, reject) => {
-		var sql = "SELECT * FROM survey";
+		var sql = "SELECT question, COUNT(question) as count FROM survey GROUP BY question";
 		pool.query(sql, function (err, result) {
 			if (err) return reject(err);
 		    console.log("Got all record");
@@ -59,9 +59,53 @@ function getAll() {
 	})
 }
 
+function getCondition(condition) {
+	return new Promise((resolve, reject) => {
+		var sql = "SELECT * FROM survey WHERE question = ?";
+		var values = [[condition]];
+		pool.query(sql, [values], function (err, result) {
+			if (err) return reject(err);
+		    console.log("Got all record");
+		    return resolve(result);
+		})
+	})
+}
+
+function deleteAll() {
+	// return new Promise((resolve, reject) => {
+		// pool.query("SET SQL_SAFE_UPDATES = 0; DELETE FROM survey; SET SQL_SAFE_UPDATES = 1;" , function (err, result) {
+		// 	if (err) return reject(err);
+		//     console.log("SET SQL_SAFE_UPDATES = 0");
+		//     return resolve(result);
+		// })
+		// pool.query("DELETE FROM survey;" , function (err, result) {
+		// 	if (err) return reject(err);
+		//     console.log("All records deleted");
+		//     resolve(result);
+		// })
+		// pool.query("SET SQL_SAFE_UPDATES = 1;" , function (err, result) {
+		// 	if (err) return reject(err);
+		//     console.log("SET SQL_SAFE_UPDATES = 1");
+		//     resolve(result);
+		// })
+		// return true;
+	pool.query("SET SQL_SAFE_UPDATES = 0;" , function (err, result) {
+		if (err) console.log(err);
+	    console.log("SET SQL_SAFE_UPDATES = 0");
+	    console.log(result);
+	})
+	pool.query("DELETE FROM survey;" , function (err, result) {
+		if (err) console.log(err);
+	    console.log("All records deleted");
+	    console.log(result);
+	})
+}
+
 module.exports = {
 	mysql,
 	addRecord,
 	getRecord,
-	getAll
+	getAll,
+	getCondition,
+	deleteAll
 }

@@ -26,6 +26,7 @@ Required Packages:
 	$ npm install -g nodemon				(real time monitor)
 	$ npm install -save mysql				(database API)
 	$ npm install express-session			(login status authentication)
+	$ npm install path						(support to delete local uploaded audio files)
 Settings:
 	package.json							(npm settings)
 Start:

@@ -15,12 +15,6 @@ var formData = new FormData();
              element.before(error); 
         },
         rules: {
-            pnum : {
-                required: true,
-            },
-            age : {
-                required: true,
-            },
             gender : {
                 required: true,
             }
@@ -39,8 +33,9 @@ var formData = new FormData();
             $(element).parent().find('.form-label').removeClass('form-label-error');
             $(element).removeClass('error');
             $(element).addClass('valid');
-        }
+        },
     });
+
     form.children("div").steps({
         headerTag: "h2",
         bodyTag: "div",
@@ -52,7 +47,7 @@ var formData = new FormData();
         },
         onStepChanging: function (event, currentIndex, newIndex)
         {
-            if (currentIndex === 5) {
+        	if (currentIndex === 5) {
             	formData.append('pnum', document.getElementById('pnum').value);
             	formData.append('age', document.getElementById('age').value);
             	formData.append('gender', document.querySelector('input[name="gender"]:checked').value);
@@ -66,7 +61,7 @@ var formData = new FormData();
             	}
             }
             
-            if (typeof audio_need !== 'undefined' && currentIndex > 6) {
+            if (typeof audio_need !== 'undefined' && currentIndex >= 6) {
                 if (audio_check) {
                     form.validate().settings.ignore = ":disabled,:hidden";
                     audio_check = false;
@@ -85,7 +80,7 @@ var formData = new FormData();
         },
         onFinished: function (event, currentIndex)
         {
-            form.parent().parent().append('<h1>This survey is to study consumer information disclosure in the context of building a participant pool. For now you do not need to type any information. Please do not tell other people the purpose of the survey.</h1>').parent().addClass('finished');
+            form.parent().parent().append('<h1 style="font-size: 1.6em">This survey is to study consumer information disclosure in the context of building a participant pool. For now you do not need to type any information. Please do not tell other people the purpose of the survey. <br><br>This is the end of the survey. Please close the window.</h1>').parent().addClass('finished');
             if (typeof audio_need == 'undefined') {
             	formData.append('q1', document.getElementById('name').value);
             	formData.append('q2', document.getElementById('birth').value);
@@ -115,7 +110,26 @@ var formData = new FormData();
             return true;
         },
         onStepChanged : function (event, currentIndex, priorIndex) {
-
+        	if (currentIndex >= 6) {
+        		audioIndex = currentIndex - 6;
+        		var audio_file = document.getElementById("question" + audioIndex);
+        		if (audio_file != null) {
+        			audio_file.play();
+        			if (document.getElementById("recordButton" + audioIndex) != null) {
+        				var target = document.getElementById("recordButton" + audioIndex);
+	        			audio_file.onended = function() {
+        					target.disabled = false;
+							target.classList.remove("btn-secondary");
+							target.classList.add("btn-primary");		
+	        			}
+        			} else if (document.getElementById('input' + audioIndex) != null) {
+        				var target = document.getElementById('input' + audioIndex).firstElementChild;
+        				audio_file.onended = function() {
+        					target.readOnly = false;
+	        			}
+        			}
+        		}
+        	}
             return true;
         }
     });

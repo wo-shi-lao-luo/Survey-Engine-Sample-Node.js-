@@ -2,6 +2,7 @@ const express = require('express');
 const routes = express.Router();
 
 const fs = require('fs');
+const path = require('path');
 const ejs = require('ejs');
 const mysql = require('./mysql');
 const multer = require('multer');
@@ -30,14 +31,15 @@ var recorderjs = fs.readFileSync(__dirname + '/pages/recorderjs.ejs', 'utf-8');
 var test = fs.readFileSync(__dirname + '/pages/test.ejs', 'utf-8');
 var admin = fs.readFileSync(__dirname + '/pages/admin.ejs', 'utf-8');
 var record = fs.readFileSync(__dirname + '/pages/record.ejs', 'utf-8');
+var condition = fs.readFileSync(__dirname + '/pages/condition.ejs', 'utf-8');
 var detail1 = fs.readFileSync(__dirname + '/pages/detail1.ejs', 'utf-8');
 var detail2 = fs.readFileSync(__dirname + '/pages/detail2.ejs', 'utf-8');
+var delete_all = fs.readFileSync(__dirname + '/pages/delete_all.ejs', 'utf-8');
 
-
-routes.get('/', function(req, res) {
-	var data = ejs.render(index);
-	res.send(data);
-});
+// routes.get('/', function(req, res) {
+// 	var data = ejs.render(index);
+// 	res.send(data);
+// });
 
 routes.get('/survey1', function(req, res) {
 	var data = ejs.render(survey, {cquestions, questions: questions1});
@@ -166,11 +168,25 @@ routes.get('/record', async function(req, res) {
 		return;
 	}
 	var records = await mysql.getAll();
-	console.log(records);
 	var data = ejs.render(record, {records: records});
 	res.send(data);
 })
 routes.post('/record', function(req, res) {
+	res.redirect('/condition?condition=' + req.body.pnum);
+	return;
+})
+
+routes.get('/condition', async function(req,res) {
+	if (!req.session.login) {
+		res.redirect('/admin');
+		return;
+	}
+	var cond = req.query.condition;
+	var records = await mysql.getCondition(cond);
+	var data = ejs.render(condition, {records: records});
+	res.send(data);
+})
+routes.post('/condition', function(req, res) {
 	res.redirect('/detail?pnum=' + req.body.pnum);
 	return;
 })
@@ -181,7 +197,7 @@ routes.get('/detail', async function(req, res) {
 		return;
 	}
 	var pnum = req.query.pnum;
-	var result= await mysql.getRecord(pnum);
+	var result = await mysql.getRecord(pnum);
 	if (result[0].question == 1 || result[0].question == 3) {
 		var data = ejs.render(detail1, {record: result});
 	}
@@ -195,6 +211,28 @@ routes.get('/logout', function(req, res) {
 	req.session.destroy();
 	res.redirect('/admin');
 	return;
+})
+
+routes.get('/delete_all', function(req, res) {
+	if (!req.session.login) {
+		res.redirect('/admin');
+		return;
+	}
+	var data = ejs.render(delete_all);
+	res.send(data);
+})
+routes.post('/delete_all', function(req, res) {
+	if (req.body.delete === "delete") {
+		mysql.deleteAll();
+	}
+	fs.readdir(__dirname + '/public/uploads', (err, files) => {
+		if (err) throw err;
+		for (const file of files) {
+			fs.unlink(path.join(__dirname + '/public/uploads', file), err => {
+				if (err) throw err;
+			});
+		}
+	});
 })
 
 module.exports = routes;
