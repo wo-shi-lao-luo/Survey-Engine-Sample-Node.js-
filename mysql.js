@@ -15,23 +15,23 @@ const pool = mysql.createPool({
 
 async function addRecord(pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9) {
 	return new Promise(async (resolve, reject) => {
-		let record = await getRecord(pnum);
-		if (record.length < 1) {
+		// let record = await getRecord(pnum);
+		// if (record.length < 1) {
 			let sql = "INSERT INTO survey (pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9) VALUES ?";
 			let values = [[pnum, question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9]];
 			pool.query(sql, [values], function (err, result) {
 			    if (err) return reject(err);
 			    console.log("New record inserted");
 			})
-		}
-		else {
-			let sql = "UPDATE survey SET ? WHERE pnum = " + "'" + pnum + "'";
-			let values = {question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9};
-			pool.query(sql, [values], function (err, result) {
-			    if (err) return reject(err);
-			    console.log("Record updated");
-			})
-		}
+		// }
+		// else {
+		// 	let sql = "UPDATE survey SET ? WHERE pnum = " + "'" + pnum + "'";
+		// 	let values = {question, age, gender, ethn, q1, q2, q3, q4, q5, q6, q7, q8, q9};
+		// 	pool.query(sql, [values], function (err, result) {
+		// 	    if (err) return reject(err);
+		// 	    console.log("Record updated");
+		// 	})
+		// }
 	
 	})
 }
