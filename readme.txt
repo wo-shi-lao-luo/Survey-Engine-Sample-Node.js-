@@ -19,24 +19,24 @@ Please check /public/js/recorder.js
 Backend settings and packages:
 
 Required Packages: 
-	$ npm install ejs						(page render)
+	$ npm install ejs					(page render)
 	$ npm install express					(server build)
-	$ npm install --save body-parser		(page content parse)
+	$ npm install --save body-parser			(page content parse)
 	$ npm install multer					(file upload)
 	$ npm install -g nodemon				(real time monitor)
 	$ npm install -save mysql				(database API)
-	$ npm install express-session			(login status authentication)
-	$ npm install path						(support to delete local uploaded audio files)
+	$ npm install express-session				(login status authentication)
+	$ npm install path					(support to delete local uploaded audio files)
 Settings:
-	package.json							(npm settings)
+	package.json						(npm settings)
 Start:
-	$ node app.js 							(start local server)
+	$ node app.js 						(start local server)
 
 Monitor:
 	Config:
 		$ npm install -g nodemon			
 	To start:
-		$ nodemon							(start local server with monitor)
+		$ nodemon					(start local server with monitor)
 		
 ``````
 
@@ -67,12 +67,12 @@ CREATE TABLE survey (
 ``````
 
 AWS Service:
-	EC2									(Linux Virtual Machine)
-	CloudFront							(HTTPS setting, also increase server response performance)
-	Route53								(SSL certificate, DNS setting)
+	EC2							(Linux Virtual Machine)
+	CloudFront						(HTTPS setting, also increase server response performance)
+	Route53							(SSL certificate, DNS setting)
 
 Linux Virtual Machine config:
-	Set output port to 80: 				(original port is 3000)
+	Set output port to 80: 					(original port is 3000)
 		$sudo iptables -t nat -A PREROUTING -p tcp --dport 80 REDIRECT --to-ports 3000
 
 Google Service:
