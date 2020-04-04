@@ -36,11 +36,6 @@ var detail1 = fs.readFileSync(__dirname + '/pages/detail1.ejs', 'utf-8');
 var detail2 = fs.readFileSync(__dirname + '/pages/detail2.ejs', 'utf-8');
 var delete_all = fs.readFileSync(__dirname + '/pages/delete_all.ejs', 'utf-8');
 
-// routes.get('/', function(req, res) {
-// 	var data = ejs.render(index);
-// 	res.send(data);
-// });
-
 routes.get('/survey1', function(req, res) {
 	var data = ejs.render(survey, {cquestions, questions: questions1});
 	res.send(data);
@@ -153,7 +148,8 @@ routes.get('/admin', function(req, res) {
 	res.send(ejs.render(admin));
 })
 routes.post('/admin', function(req, res) {
-	if (req.body.username === "GWU" && req.body.password === "marketing") {
+	// This is only for testing, recommend to use Hash and DB
+	if (req.body.username === "test" && req.body.password === "testtest") {
 		req.session.login = true;
 		res.redirect('/record');
 		return;
